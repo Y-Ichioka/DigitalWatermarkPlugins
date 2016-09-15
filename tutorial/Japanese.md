@@ -60,7 +60,7 @@ plugins
 1枚のビットプレーンに画像の横幅×画像の立幅[bit]分のデータを埋め込むことができます。
 
 ####3. ビットプレーンを画像に変換
-1. ビットプレーンに変換 (*Plugins*->*DigitalWatermark*->*BitPlanes to GrayScale*)
+1. 画像に変換 (*Plugins*->*DigitalWatermark*->*BitPlanes to GrayScale*)
 2. 埋め込みを行った画像を保存 (*File*->*Save*)
 
 ![embed_3](image/embed_3.png)
