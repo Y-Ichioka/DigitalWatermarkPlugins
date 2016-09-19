@@ -10,4 +10,4 @@ It works on the ImageJ or Fiji.
 
 For details, please refer to the [tutorial page](/tutorial/English.md).
 
-
+I'm sorry I'm not used to writing English, so it might be difficult for you to understand it. But I hope it's OK.
