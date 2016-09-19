@@ -94,6 +94,8 @@ If if you are named "*.jpg" to image when you save the image, the image will be 
 Please refer to [documentation](../documentation) for details of other plug-ins was not used in Section 3.
 Or please refer to the source code of Java.
 
+if you use the other plug-ins and plug-ins that were introduced in Section 7, It is possible to implement an image digital watermark using a spread spectrum.
+
 
 ##5. Video reading and writing
 ###Read
