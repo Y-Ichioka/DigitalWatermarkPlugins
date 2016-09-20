@@ -74,9 +74,11 @@ public class Cross_Correlation_Function implements PlugIn {
       for (int j=0; j<min; j++) {
         sum += series1[(j+i)%series1.length] * series2[j];
       }
+      IJ.log(100.0*(double)i/func.length+"%");
 
       func[i] = sum;
     }
+    IJ.log("100%");
 
     return func;
   }
