@@ -94,7 +94,7 @@ If if you are named "*.jpg" to image when you save the image, the image will be 
 Please refer to [documentation](../documentation) for details of other plug-ins was not used in Section 3.
 Or please refer to the source code of Java.
 
-if you use the other plug-ins and plug-ins that were introduced in Section 7, It is possible to implement an image digital watermark using a spread spectrum.
+if you use the other plug-ins and plug-ins that were introduced in Section 7, It is possible to implement an image digital watermark using a spread spectrum. **(Added a brief description in Section 8)**
 
 
 ##5. Video reading and writing
@@ -135,3 +135,32 @@ https://imagej.nih.gov/ij/plugins/mssim-index.html
 
 * Calculate SSIM Index
 https://imagej.nih.gov/ij/plugins/ssim-index.html
+
+
+##8. Embedded in the frequency domain (1bit embedding and extraction)
+I introduce the procedure embedding and extraction using the frequency domain of the image.
+Image and sequence used in the examples are in the sample directory.
+It is possible to prepare the series on your own.
+In addition, it is possible to create a random number series by using Spread Spectrum DS plugin and Load Sample Data plugin.
+
+basic_series.txt is a file that random number sequence is written. (sequence length of 5900, values are +1 or -1)
+The value of +1.txt is is multiplied by +1 to the value of the basic_series.txt.
+The value of -1.txt is is multiplied by -1 to the value of the basic_series.txt.
+
+**Embedded processing**
+
+1. Load original image (example: lena_32bit.tif)
+2. Load mask image that specify the embedded frequency domain (example: mask.tif (The number of white pixels　is 5900))
+3. To activate and click the target image, and exec FFT (example: use the Fast Hartley Trasnfrom by using the options)
+4. To activate and click the target image, and add sequence to image (Add Sequence to 32bit Image plugin) (example: +1.txt Sequence length is 5900, Alpha value is 1000)
+5. Inverse FFT (Fast Hartley Trasnfrom)
+6. Save (example: lena_32bit_+1_alpha1000.tif)
+
+**Extraction process**
+
+1. Load embedded image. (example: lena_32bit_+1_alpha1000.tif)
+2. Same as step 2 of embedded processing
+3. Same as step 3 of embedded processing
+4. Reads the value of the frequency domain, and save (Read 32bit Image plugin) (example: lena_32bit_+1_alpha1000.txt)
+5. Calculating the cross-correlation function of between the value of the frequency domain and based sequence (Cross　Correlation　Function plugin) (example: basic_series.txtとlena_32bit_+1_alpha1000.txt)
+6. If you were embedded with the +1.txt, 0-th value of the cross-correlation function will be big positive value. If you were embedded with the -1.txt, 0-th value of the cross-correlation function will be big negative value. (example: lena_32bit_+1_alpha1000_cross.txt)

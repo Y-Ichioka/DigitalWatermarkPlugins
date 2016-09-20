@@ -92,7 +92,8 @@ plugins
 ##4. その他プラグイン
 3節で用いなかったその他のプラグインの詳細は[ドキュメント](../documentation)を参照してください。また、Javaのソースコードを参照してください。
 
-7節で紹介するプラグインとその他のプラグインを用いれば、スペクトル拡散を用いた電子透かしを実現することが可能です。
+7節で紹介するプラグインとその他のプラグインを用いれば、スペクトル拡散を用いた電子透かしを実現することが可能です。**(8節に簡単な説明を追加しました)**
+
 
 
 ##5. 動画の読み込み、書き出し
@@ -133,3 +134,31 @@ https://imagej.nih.gov/ij/plugins/mssim-index.html
 
 * Calculate SSIM Index
 https://imagej.nih.gov/ij/plugins/ssim-index.html
+
+
+##8. 周波数領域に埋め込み(1bitの埋め込み・抽出)
+画像の周波数領域に系列を足しこみ1bitの埋め込み・抽出の手順を紹介します。
+sampleディレクトリ内には例で用いた画像や系列が保存されています。
+系列などは自分で用意しても、Spread Spectrum DSプラグインやLoad Sample Dataプラグインを利用することで乱数系列を作成することが可能です。
+
+basic_series.txtは系列長5900の+1,-1のみで構成される乱数系列です。
++1.txtはbasic_series.txtの値をすべて×+1したもので、
+-1.txtはbasic_series.txtの値をすべて×-1したものです。
+
+**埋め込み手順**
+
+1. オリジナル画像の読み込み (例: lena_32bit.tif)
+2. 埋め込む周波数領域を指定したマスク画像の読み込み (例: mask.tif (白画素数は5900))
+3. 対象画像をクリックしアクティブに、FFT (例: オプションでdisplayのFast Hartley Trasnfromのみにする)
+4. 対象画像をクリックしアクティブに、系列の足しこみ (Add Sequence to 32bit Imageプラグイン) (例: +1.txt 系列長は5900 alphaは1000)
+5. 逆変換を行う Inverse FFT (Fast Hartley Trasnfrom)
+6. 保存する (例: lena_32bit_+1_alpha1000.tif)
+
+**抽出手順**
+
+1. 埋め込み済み画像の読み込み (例: lena_32bit_+1_alpha1000.tif)
+2. 埋め込み手順の2と同じ
+3. 埋め込み手順の3と同じ
+4. 周波数領域の値を読み込み、保存 (Read 32bit Imageプラグイン) (例: lena_32bit_+1_alpha1000.txt)
+5. 基礎系列と読み込んだ周波数領域の値との相互相関関数を計算　(Cross　Correlation　Functionプラグイン) (例: basic_series.txtとlena_32bit_+1_alpha1000.txt)
+6. 0シフト目の相関値が+1.txt系列を埋め込んだならば大きくプラス、-1.txtなら大きくマイナスな値をとる (例: lena_32bit_+1_alpha1000_cross.txt)
